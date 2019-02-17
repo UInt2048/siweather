@@ -30,7 +30,6 @@ var getMETAR=(loop, SWbound, NEbound, date=[false,false,false], h=false, m=false
 		currentCell.appendChild(document.createTextNode((weather.ceil?(weather.ceil*30.48).toFixed(1)+" m":"None")));
 		currentCell=newRow.insertCell(-1);
 		let wx = weather.wx;
-		if(wx){if(wx.indexOf("TSRA")!=-1){let a=wx.split("TSRA");wx=a[0]+"TS"+a[1];}} // Thunderstorm Rain - really?
 		let _condition=(weather.cover=="SKC"||weather.cover=="NCD"||weather.cover=="CLR"||weather.cover=="NSC"?"Clear":weather.cover=="FEW"?"Few Clouds (<25% of sky covered)":weather.cover=="SCT"?"Scattered Clouds (25-50% of sky covered)":weather.cover=="BKN"?"Broken Clouds (>50% of sky covered)":weather.cover=="OVC"?"Overcast (100% of sky covered)":"Clouds are covered")+(weather.wx?"; ":""),conditions=[["-","Light"],["+","Heavy"],["VC","Nearby"],["MI","Shallow"],["PR","Partial"],["BC","Patches of"],["DR","Low Drifting"],["BL","Blowing"],["SH","Shower"],["TS","Thunderstorm"],["FZ","Freezing"],["DZ","Drizzle"],["RA","Rain"],["SN","Snow"],["SG","Snow Grains"],["IC","Ice Crystals"],["PL","Ice Pellets"],["GR","Hail"],["GS","Snow Pellets/Small Hail"],["UP","Unknown Precipitation"],["BR","Mist"],["FG","Fog"],["FU","Smoke"],["VA","Volcanic Ash"],["DU","Widespread Dust"],["SA","Sand"],["HZ","Haze"],["PY","Spray"],["PO","Developed Dust/Sand Whirls"],["SQ","Squalls"],["FC","Funnel Clouds"],["SS","Sandstorm"],["DS","Duststorm"]];
 		for(let condition of conditions){wx?(wx.indexOf(condition[0])!=-1?_condition+=(condition[1]+' '):0):0;};
 		currentCell.appendChild(document.createTextNode(_condition));
@@ -40,10 +39,9 @@ var getMETAR=(loop, SWbound, NEbound, date=[false,false,false], h=false, m=false
 		currentCell.appendChild(document.createTextNode((weather.altim/100).toFixed(3)+" kg\u22C5m\u207B\u00B9\u22C5s\u207B\u00B2"));
 		currentCell=newRow.insertCell(-1);
 		currentCell.appendChild(document.createTextNode(weather.slp?((weather.slp/100).toFixed(3)+" kg\u22C5m\u207B\u00B9\u22C5s\u207B\u00B2"):((weather.altim/100).toFixed(3)+" kg\u22C5m\u207B\u00B9\u22C5s\u207B\u00B2")));
-		if (loop){
-		let t=weather.obsTime;
-		let d=[parseInt(t.substring(0,4)),parseInt(t.substring(5,7)),parseInt(t.substring(8,10))],h=parseInt(t.substring(11,13));
-		getMETAR(true, SWbound,NEbound,d,h-1,59);
+		if(loop){
+			let t=weather.obsTime,d=[parseInt(t.substring(0,4)),parseInt(t.substring(5,7)),parseInt(t.substring(8,10))],h=parseInt(t.substring(11,13));
+			getMETAR(true,SWbound,NEbound,d,h-1,59);
 		}
 	});
 };

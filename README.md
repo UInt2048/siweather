@@ -1,6 +1,6 @@
 # SI Weather
-SI Weather - who needs derived units?
+SI Weather - who needs derived units or anything outside of SI?
 
 This project displays the weather in strictly SI base units (or multiples of them)
 
-You can go to https://htmlpreview.github.io/?https://github.com/turtlemaster19/siweather/blob/master/siweather.html to try it out!
+You can [click this link](https://uint2048.github.io/siweather/siweather.html) to try it out!

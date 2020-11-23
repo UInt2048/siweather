@@ -7,7 +7,7 @@ var getMETAR=(loop, SWbound, NEbound, date=[false,false,false], h=false, m=false
 	let url = corsanywhere+"www.aviationweather.gov/cgi-bin/json/MetarJSON.php?bbox="+SWbound[0]+","+SWbound[1]+","+NEbound[0]+","+NEbound[1];
 	url+=(date[0]?"&date="+date[0].pad(4)+date[1].pad(2)+date[2].pad(2)+h.pad(2)+m.pad(2):"");
 	getData(url, data=>{
-		let weather=JSON.parse(data).features[0];
+		let weather=JSON.parse(data).features[1];
 		if (!weather) {throw "Data Not Found";}
 		weather=weather.properties;
 		let rows = document.getElementById("weather").getElementsByTagName("tr").length;
@@ -31,7 +31,7 @@ var getMETAR=(loop, SWbound, NEbound, date=[false,false,false], h=false, m=false
 		currentCell=newRow.insertCell(-1);
 		let wx = weather.wx;
 		let _condition=(weather.cover=="SKC"||weather.cover=="NCD"||weather.cover=="CLR"||weather.cover=="NSC"?"Clear":weather.cover=="FEW"?"Few Clouds (<25% of sky covered)":weather.cover=="SCT"?"Scattered Clouds (25-50% of sky covered)":weather.cover=="BKN"?"Broken Clouds (>50% of sky covered)":weather.cover=="OVC"?"Overcast (100% of sky covered)":"Clouds are covered")+(weather.wx?"; ":""),conditions=[["-","Light"],["+","Heavy"],["VC","Nearby"],["MI","Shallow"],["PR","Partial"],["BC","Patches of"],["DR","Low Drifting"],["BL","Blowing"],["SH","Shower"],["TS","Thunderstorm"],["FZ","Freezing"],["DZ","Drizzle"],["RA","Rain"],["SN","Snow"],["SG","Snow Grains"],["IC","Ice Crystals"],["PL","Ice Pellets"],["GR","Hail"],["GS","Snow Pellets/Small Hail"],["UP","Unknown Precipitation"],["BR","Mist"],["FG","Fog"],["FU","Smoke"],["VA","Volcanic Ash"],["DU","Widespread Dust"],["SA","Sand"],["HZ","Haze"],["PY","Spray"],["PO","Developed Dust/Sand Whirls"],["SQ","Squalls"],["FC","Funnel Clouds"],["SS","Sandstorm"],["DS","Duststorm"]];
-		for(let condition of conditions){wx?(wx.indexOf(condition[0])!=-1?_condition+=(condition[1]+' '):0):0;};
+		for(let condition of conditions) wx?(wx.indexOf(condition[0])!=-1?_condition+=(condition[1]+' '):0):0;
 		currentCell.appendChild(document.createTextNode(_condition));
 		currentCell=newRow.insertCell(-1);
 		currentCell.appendChild(document.createTextNode((weather.visib*1.609344).toFixed(1)+" km"));

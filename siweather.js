@@ -133,9 +133,9 @@ var getMETAR = (loop, SWbound, NEbound, date = [false, false, false], h = false,
       let t = weather.obsTime,
         d = [parseInt(t.substring(0, 4)), parseInt(t.substring(5, 7)), parseInt(t.substring(8, 10))],
         h = parseInt(t.substring(11, 13));
-      if (h == -1) {
+      if (h == 0) {
   			h += 24;
-  			date[2]--;
+  			d[2]--;
   		}
       getMETAR(true, SWbound, NEbound, d, h - 1, 59, weather.timestamp);
     }
